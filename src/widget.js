@@ -61,7 +61,18 @@ window.AbotChat = {
 		 this.status.current = 'user';
 		}
 
-		message = decodeURIComponent(message);
+		// Handle a case where a user message includes a '%' symbol, ignoring
+		// an error.
+		try {
+			message = decodeURIComponent(message);
+		} catch (err) {
+			console.log(err)
+		}
+
+		// Abot does not always return a response, e.g. to a user message "cool"
+		if (message.length === 0) {
+			return;
+		}
 
 		var msgClass = 'abot-embed-body';
 		var divClass = '';
